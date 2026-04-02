@@ -1,0 +1,3 @@
+D:/uet/ltnc/game/build/CMakeFiles/SpaceOdyssey.dir
+D:/uet/ltnc/game/build/CMakeFiles/edit_cache.dir
+D:/uet/ltnc/game/build/CMakeFiles/rebuild_cache.dir

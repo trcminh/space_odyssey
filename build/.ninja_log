@@ -1,0 +1,5 @@
+# ninja log v6
+2573	2912	7968066076693065	D:/uet/ltnc/game/SpaceOdyssey.exe	e5977ca007ec35f4
+28	2573	7968066051230669	CMakeFiles/SpaceOdyssey.dir/src/main.cpp.obj	4790520be7b8bdfa
+18	180	7968096590706283	build.ninja	7293d46eebd8c972
+18	180	7968096590656649	D:/uet/ltnc/game/build/cmake_install.cmake	7293d46eebd8c972
