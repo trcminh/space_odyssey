@@ -1,8 +1,0 @@
-[
-{
-  "directory": "D:/uet/ltnc/game/build",
-  "command": "C:\\w64devkit\\bin\\g++.exe -ID:/uet/ltnc/game/SDL2/include -ID:/uet/ltnc/game/SDL2/include/SDL2 -ID:/uet/ltnc/game/SDL2/include-config-/SDL2 -ID:/uet/ltnc/game/SDL2/include-config-debug/SDL2 -ID:/uet/ltnc/game/SDL2_image/include -ID:/uet/ltnc/game/SDL2_image/include/SDL2 -ID:/uet/ltnc/game/SDL2_ttf/include -ID:/uet/ltnc/game/SDL2_ttf/include/SDL2 -ID:/uet/ltnc/game/SDL2_mixer/include -ID:/uet/ltnc/game/SDL2_mixer/include/SDL2 -g -std=gnu++17 -o CMakeFiles\\SpaceOdyssey.dir\\src\\main.cpp.obj -c D:\\uet\\ltnc\\game\\src\\main.cpp",
-  "file": "D:/uet/ltnc/game/src/main.cpp",
-  "output": "D:/uet/ltnc/game/build/CMakeFiles/SpaceOdyssey.dir/src/main.cpp.obj"
-}
-]
