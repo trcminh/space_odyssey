@@ -1,6 +1,6 @@
 # Space Odyssey
 
-## 1. Hướng dẫn xây dựng và biên dịch (Build Guide)
+## 1. Hướng dẫn Build
 
 Tải và cài đặt w64devkit tại: https://github.com/skeeto/w64devkit/releases
 Tải à cài đặt cmake tại: https://cmake.org/download/
@@ -12,6 +12,10 @@ Kiểm tra bằng cách mở terminal lên gõ:
 cmake -v
 gcc -v
 g++ -v
+```
+Clone repository về
+```
+git clone https://github.com/trcminh/space_odyssey.git
 ```
 Build và chạy 
 ```
