@@ -102,7 +102,8 @@ void checkPlayerCollisions() {
     // Quái đâm player
     for (Enemy& e : enemies) {
         if (!e.active || e.state != EnemyState::ALIVE) continue;
-        if (AABB(hx, hy, 4, 4, e.x, e.y, e.w, e.h)) {
+        float ex = e.x + e.w / 2.0f - 2, ey = e.y + e.h / 2.0f - 2;
+        if (AABB(hx, hy, 4, 4, ex, ey, 4, 4)) {
             damagePlayer();
             handleEnemyDeath(e);
             return;

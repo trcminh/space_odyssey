@@ -158,7 +158,8 @@ void checkBulletEnemyCollisions() {
         if (!b.active || !b.is_player_bullet) continue;
         for (Enemy& e : enemies) {
             if (!e.active || e.state != EnemyState::ALIVE) continue;
-            if (!AABB(b.x, b.y, b.w, b.h, e.x, e.y, e.w, e.h)) continue;
+            float ex = e.x + e.w / 2.0f - 2, ey = e.y + e.h / 2.0f - 2;
+            if (!AABB(b.x, b.y, b.w, b.h, ex, ey, 4, 4)) continue;
             b.active = false;
             e.hp -= b.damage;
             if (e.hp <= 0) handleEnemyDeath(e);
