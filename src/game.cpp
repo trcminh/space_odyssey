@@ -33,6 +33,7 @@ int          waveEnemyTarget = 0;
 int          spawnTimer      = 0;
 int          spawnedSmall    = 0;
 int          spawnedMedium   = 0;
+int          spawnedLarge   = 0;
 Uint32       transitionStart = 0;
 int          highScore       = 0;
 const Uint8* keyboardState   = nullptr;
