@@ -2,7 +2,9 @@
 
 // Cập nhật animation, trả true khi hết vòng
 bool updateAnim(AnimState& anim, Uint32 now, Uint32 interval) {
-    if (now - anim.last_anim_time <= interval) return false;
+    if (now - anim.last_anim_time <= interval) {
+        return false;
+    }
     anim.last_anim_time = now;
     if (++anim.current_frame >= anim.total_frames) {
         anim.current_frame = 0;
@@ -13,7 +15,9 @@ bool updateAnim(AnimState& anim, Uint32 now, Uint32 interval) {
 
 // Đếm số frame trong sprite sheet (mỗi frame vuông)
 int countFrames(SDL_Texture* tex) {
-    if (!tex) return 1;
+    if (!tex) {
+        return 1;
+    }
     int w, h;
     SDL_QueryTexture(tex, NULL, NULL, &w, &h);
     int frames = (h > 0) ? w / h : 1;
@@ -26,20 +30,21 @@ Bullet createBullet(SDL_Texture* tex, float x, float y,
 {
     Bullet b;
     b.texture = tex;
-    b.x = x; b.y = y;
-    b.vx = vx; b.vy = vy;
+    b.x = x;
+    b.y = y;
+    b.vx = vx;
+    b.vy = vy;
     b.damage = damage;
     b.is_player_bullet = isPlayer;
     b.active = true;
     b.scale = 1.0f;
-    b.w = 16; b.h = 16;
-    b.anim = {0, 1, SDL_GetTicks()};
+    b.w = 16;
+    b.h = 16;
     if (tex) {
         int sw, sh;
         SDL_QueryTexture(tex, NULL, NULL, &sw, &sh);
-        b.w = sh; b.h = sh;
-        // Đạn player không animation, đạn quái có animation
-        if (!isPlayer) b.anim.total_frames = countFrames(tex);
+        b.w = sh;
+        b.h = sh;
     }
     return b;
 }
@@ -48,14 +53,18 @@ Bullet createBullet(SDL_Texture* tex, float x, float y,
 void updateBullets() {
     Uint32 now = SDL_GetTicks();
     for (Bullet& b : bullets) {
-        if (!b.active) continue;
+        if (!b.active) {
+            continue;
+        }
         b.x += b.vx;
         b.y += b.vy;
-        if (b.is_player_bullet && b.vy < -7.0f) b.vy -= 0.5f;
-        updateAnim(b.anim, now, 50);
+        if (b.is_player_bullet && b.vy < -7.0f) {
+            b.vy -= 0.5f;
+        }
         if (b.x < -OFFSCREEN_MARGIN || b.x > SCREEN_WIDTH + OFFSCREEN_MARGIN ||
-            b.y < -OFFSCREEN_MARGIN || b.y > SCREEN_HEIGHT + OFFSCREEN_MARGIN)
+            b.y < -OFFSCREEN_MARGIN || b.y > SCREEN_HEIGHT + OFFSCREEN_MARGIN) {
             b.active = false;
+        }
     }
 }
 
@@ -63,20 +72,28 @@ void updateBullets() {
 void updatePickups() {
     Uint32 now = SDL_GetTicks();
     for (Pickup& p : pickups) {
-        if (!p.active) continue;
+        if (!p.active) {
+            continue;
+        }
         p.y += p.vy;
         updateAnim(p.anim, now, 80);
-        if (p.y > SCREEN_HEIGHT) p.active = false;
+        if (p.y > SCREEN_HEIGHT) {
+            p.active = false;
+        }
     }
 }
 
 // Cập nhật chữ nổi điểm
 void updateFloatingTexts() {
     for (FloatingText& ft : floating_texts) {
-        if (!ft.active) continue;
+        if (!ft.active) {
+            continue;
+        }
         ft.y -= 1.0f;
         ft.alpha -= 5.0f;
-        if (ft.alpha <= 0) ft.active = false;
+        if (ft.alpha <= 0) {
+            ft.active = false;
+        }
     }
 }
 
@@ -94,22 +111,25 @@ void cleanupVectors() {
 
 // Tính số quái cần giết mỗi wave
 static int calcWaveTarget() {
-    return (currentStage == 3) ? currentWave : currentWave * 2;
+    if (currentStage == 3) {
+        return currentWave;
+    }
+    return currentWave * 2;
 }
 
 // Khởi tạo player
 static void initPlayer() {
-    player.x     = (float)(SCREEN_WIDTH  / 2 - PLAYER_SIZE / 2);
-    player.y     = (float)(SCREEN_HEIGHT - 100);
+    player.x = (float)(SCREEN_WIDTH / 2 - PLAYER_SIZE / 2);
+    player.y = (float)(SCREEN_HEIGHT - 100);
     player.lives = INITIAL_LIVES;
     player.score = 0;
-    player.is_dead         = false;
+    player.is_dead = false;
     player.is_invulnerable = true;
     player.invuln_start_time = SDL_GetTicks();
-    player.current_weapon  = WeaponType::AUTO_CANNON;
-    player.weapon_level    = 1;
+    player.current_weapon = WeaponType::AUTO_CANNON;
+    player.weapon_level = 1;
     player.last_shoot_time = 0;
-    player.has_shield        = false;
+    player.has_shield = false;
     player.shield_start_time = 0;
     player.shield_anim = {0, 1, 0};
     if (texPlayerShield) {
@@ -120,22 +140,36 @@ static void initPlayer() {
 // Bắt đầu ván mới
 static void restartGame() {
     initPlayer();
-    bullets.clear(); enemies.clear(); pickups.clear(); floating_texts.clear();
-    currentStage = 1; currentWave = 1;
-    enemyKillCount = 0; waveEnemyTarget = calcWaveTarget();
-    spawnTimer = 0; spawnedSmall = 0; spawnedMedium = 0;
+    bullets.clear();
+    enemies.clear();
+    pickups.clear();
+    floating_texts.clear();
+    currentStage = 1;
+    currentWave = 1;
+    enemyKillCount = 0;
+    waveEnemyTarget = calcWaveTarget();
+    spawnTimer = 0;
+    spawnedSmall = 0;
+    spawnedMedium = 0;
+    spawnedLarge = 0;
     transitionStart = 0;
     currentState = GameState::PLAYING;
-    if (bgmMusic) Mix_PlayMusic(bgmMusic, -1);
+    if (bgmMusic) {
+        Mix_PlayMusic(bgmMusic, -1);
+    }
 }
 
 // Kiểm tra tiến trình wave/stage
 static void checkWaveProgress() {
-    if (transitionStart > 0 || enemyKillCount < waveEnemyTarget) return;
+    if (transitionStart > 0 || enemyKillCount < waveEnemyTarget) {
+        return;
+    }
 
     if (currentWave == 10) {
         if (currentStage >= 3) {
-            if (player.score > highScore) highScore = player.score;
+            if (player.score > highScore) {
+                highScore = player.score;
+            }
             currentState = GameState::GAME_WON;
         } else {
             transitionStart = SDL_GetTicks();
@@ -143,7 +177,8 @@ static void checkWaveProgress() {
     } else {
         currentWave++;
         enemyKillCount = 0;
-        spawnedSmall = 0; spawnedMedium = 0;
+        spawnedSmall = 0;
+        spawnedMedium = 0;
         waveEnemyTarget = calcWaveTarget();
     }
 }
@@ -161,7 +196,9 @@ int main(int argc, char* args[]) {
         SCREEN_WIDTH, SCREEN_HEIGHT, 0);
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-    if (!loadFiles()) return -1;
+    if (!loadFiles()) {
+        return -1;
+    }
     initPlayer();
 
     bool isRunning = true;
@@ -173,20 +210,31 @@ int main(int argc, char* args[]) {
 
         // Xử lý sự kiện
         while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT) { isRunning = false; break; }
-            if (event.type != SDL_KEYDOWN) continue;
+            if (event.type == SDL_QUIT) {
+                isRunning = false;
+                break;
+            }
+            if (event.type != SDL_KEYDOWN) {
+                continue;
+            }
             SDL_Keycode key = event.key.keysym.sym;
 
             if (key == SDLK_ESCAPE) {
-                if (currentState == GameState::PLAYING)      currentState = GameState::PAUSED;
-                else if (currentState == GameState::PAUSED)  currentState = GameState::PLAYING;
+                if (currentState == GameState::PLAYING) {
+                    currentState = GameState::PAUSED;
+                } else if (currentState == GameState::PAUSED) {
+                    currentState = GameState::PLAYING;
+                }
             }
 
             if (key == SDLK_SPACE || key == SDLK_RETURN) {
                 if (currentState == GameState::MENU) {
                     restartGame();
                 } else if (currentState == GameState::GAMEOVER || currentState == GameState::GAME_WON) {
-                    bullets.clear(); enemies.clear(); pickups.clear(); floating_texts.clear();
+                    bullets.clear();
+                    enemies.clear();
+                    pickups.clear();
+                    floating_texts.clear();
                     currentState = GameState::MENU;
                 }
             }
@@ -198,11 +246,18 @@ int main(int argc, char* args[]) {
 
             if (transitionStart > 0 && SDL_GetTicks() - transitionStart > 5000) {
                 currentStage++;
-                currentWave = 1; enemyKillCount = 0;
-                spawnTimer = 0; spawnedSmall = 0; spawnedMedium = 0;
+                currentWave = 1;
+                enemyKillCount = 0;
+                spawnTimer = 0;
+                spawnedSmall = 0;
+                spawnedMedium = 0;
+                spawnedLarge = 0;
                 transitionStart = 0;
                 waveEnemyTarget = calcWaveTarget();
-                bullets.clear(); enemies.clear(); pickups.clear(); floating_texts.clear();
+                bullets.clear();
+                enemies.clear();
+                pickups.clear();
+                floating_texts.clear();
             }
 
             updatePlayer();
@@ -220,7 +275,9 @@ int main(int argc, char* args[]) {
         render();
 
         Uint32 frameTime = SDL_GetTicks() - frameStart;
-        if (frameTime < 16) SDL_Delay(16 - frameTime);
+        if (frameTime < 16) {
+            SDL_Delay(16 - frameTime);
+        }
     }
 
     // Dọn dẹp tài nguyên
@@ -233,12 +290,19 @@ int main(int argc, char* args[]) {
         texEnemyMediumBase, texEnemyMediumDest,
         texEnemyLargeBase, texEnemyLargeDest, texBackground
     };
-    for (int i = 0; i < (int)(sizeof(allTextures)/sizeof(allTextures[0])); i++)
-        if (allTextures[i]) SDL_DestroyTexture(allTextures[i]);
-    if (bgmMusic) Mix_FreeMusic(bgmMusic);
+    for (int i = 0; i < (int)(sizeof(allTextures) / sizeof(allTextures[0])); i++) {
+        if (allTextures[i]) {
+            SDL_DestroyTexture(allTextures[i]);
+        }
+    }
+    if (bgmMusic) {
+        Mix_FreeMusic(bgmMusic);
+    }
     Mix_CloseAudio();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
-    TTF_Quit(); IMG_Quit(); SDL_Quit();
+    TTF_Quit();
+    IMG_Quit();
+    SDL_Quit();
     return 0;
 }

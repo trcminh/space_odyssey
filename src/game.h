@@ -13,18 +13,18 @@
 #include <algorithm>
 
 // Hằng số cấu hình
-const int SCREEN_WIDTH  = 640;
-const int SCREEN_HEIGHT = 828;
-const int    PLAYER_SIZE   = 64;
-const float  PLAYER_SPEED  = 6.0f;
-const float  ENEMY_SPEED   = 1.5f;
-const float  PICKUP_SPEED  = 2.0f;
-const int    PICKUP_SIZE   = 32;
-const Uint32 INVULN_TIME   = 3000;
-const Uint32 SHIELD_TIME   = 10000;
-const Uint32 RESPAWN_DELAY = 500;
-const int    INITIAL_LIVES = 3;
-const bool   GOD_MODE      = false;
+const int    SCREEN_WIDTH       = 640;
+const int    SCREEN_HEIGHT      = 828;
+const int    PLAYER_SIZE        = 64;
+const float  PLAYER_SPEED       = 6.0f;
+const float  ENEMY_SPEED        = 1.5f;
+const float  PICKUP_SPEED       = 2.0f;
+const int    PICKUP_SIZE        = 32;
+const Uint32 INVULN_TIME        = 3000;
+const Uint32 SHIELD_TIME        = 10000;
+const Uint32 RESPAWN_DELAY      = 500;
+const int    INITIAL_LIVES      = 3;
+const bool   GOD_MODE           = false;
 const float  OFFSCREEN_MARGIN   = 100.0f;
 const int    SCORE_PICKUP       = 100;
 const int    SCORE_ENEMY_SMALL  = 50;
@@ -37,7 +37,7 @@ enum class PickupType { WEAPON, SHIELD };
 enum class WeaponType { AUTO_CANNON, ROCKET };
 enum class EnemyState { ALIVE, EXPLODING };
 enum class EnemySize  { SMALL, MEDIUM, LARGE };
-enum class AttackType { AIMED, N_WAY, BURST_360 };
+enum class AttackType { N_WAY, BURST_360 };
 
 // Struct
 struct AnimState {
@@ -63,9 +63,9 @@ struct Player {
     WeaponType current_weapon;
     int        weapon_level;
     Uint32     last_shoot_time;
-    bool      has_shield;
-    Uint32    shield_start_time;
-    AnimState shield_anim;
+    bool       has_shield;
+    Uint32     shield_start_time;
+    AnimState  shield_anim;
 };
 
 struct Bullet {
@@ -75,7 +75,6 @@ struct Bullet {
     float scale;
     SDL_Texture* texture;
     int   w, h;
-    AnimState anim;
 };
 
 struct Pickup {
@@ -92,15 +91,15 @@ struct Enemy {
     float x, y;
     int   hp, max_hp;
     bool  active;
-    EnemySize   size_class;
-    EnemyState  state;
-    Uint32      shoot_delay, last_shoot_time;
-    int         score_value, drop_chance;
-    AnimState   anim;
+    EnemySize    size_class;
+    EnemyState   state;
+    Uint32       shoot_delay, last_shoot_time;
+    int          score_value, drop_chance;
+    AnimState    anim;
     SDL_Texture* texture_base;
     SDL_Texture* texture_destruction;
     SDL_Texture* texture_bullet;
-    int w, h;
+    int   w, h;
     float target_y   = 150;
     int   move_phase = 0;
 };
@@ -109,22 +108,22 @@ struct Enemy {
 extern SDL_Window*   window;
 extern SDL_Renderer* renderer;
 extern TTF_Font*     font;
-extern SDL_Texture* texPlayer[4];
-extern SDL_Texture* texWeaponAuto;
-extern SDL_Texture* texWeaponRocket;
-extern SDL_Texture* texIconAuto;
-extern SDL_Texture* texIconRocket;
-extern SDL_Texture* texIconShield;
-extern SDL_Texture* texPlayerShield;
-extern SDL_Texture* texEnemyBullet;
-extern SDL_Texture* texEnemySmallBase;
-extern SDL_Texture* texEnemySmallDest;
-extern SDL_Texture* texEnemyMediumBase;
-extern SDL_Texture* texEnemyMediumDest;
-extern SDL_Texture* texEnemyLargeBase;
-extern SDL_Texture* texEnemyLargeDest;
-extern SDL_Texture* texBackground;
-extern Mix_Music*   bgmMusic;
+extern SDL_Texture*  texPlayer[4];
+extern SDL_Texture*  texWeaponAuto;
+extern SDL_Texture*  texWeaponRocket;
+extern SDL_Texture*  texIconAuto;
+extern SDL_Texture*  texIconRocket;
+extern SDL_Texture*  texIconShield;
+extern SDL_Texture*  texPlayerShield;
+extern SDL_Texture*  texEnemyBullet;
+extern SDL_Texture*  texEnemySmallBase;
+extern SDL_Texture*  texEnemySmallDest;
+extern SDL_Texture*  texEnemyMediumBase;
+extern SDL_Texture*  texEnemyMediumDest;
+extern SDL_Texture*  texEnemyLargeBase;
+extern SDL_Texture*  texEnemyLargeDest;
+extern SDL_Texture*  texBackground;
+extern Mix_Music*    bgmMusic;
 extern std::vector<Bullet>       bullets;
 extern std::vector<Enemy>        enemies;
 extern std::vector<Pickup>       pickups;
