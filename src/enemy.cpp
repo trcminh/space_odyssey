@@ -31,7 +31,7 @@ void spawnEnemy(int sizeIdx) {
         e.size_class = EnemySize::MEDIUM;
         e.texture_base = texEnemyMediumBase;
         e.texture_destruction = texEnemyMediumDest;
-        e.hp = e.max_hp = 40;
+        e.hp = e.max_hp = 30;
         e.shoot_delay = 1800;
         e.score_value = SCORE_ENEMY_MEDIUM;
         e.drop_chance = 20;
@@ -39,7 +39,7 @@ void spawnEnemy(int sizeIdx) {
         e.size_class = EnemySize::LARGE;
         e.texture_base = texEnemyLargeBase;
         e.texture_destruction = texEnemyLargeDest;
-        e.hp = e.max_hp = 80;
+        e.hp = e.max_hp = 50;
         e.shoot_delay = 800;
         e.score_value = SCORE_ENEMY_LARGE;
         e.drop_chance = 25;
@@ -61,15 +61,18 @@ void updateSpawner() {
     if (++spawnTimer < cooldown) return;
     spawnTimer = 0;
 
-    if (spawnedSmall + spawnedMedium >= waveEnemyTarget) return;
+    if (spawnedSmall + spawnedMedium + spawnedLarge >= waveEnemyTarget) return;
 
     if (currentStage == 1) {
         spawnEnemy(0); spawnedSmall++;
     } else if (currentStage == 2) {
-        if (rand() % 2 == 0) { spawnEnemy(1); spawnedMedium++; }
-        else                  { spawnEnemy(0); spawnedSmall++; }
+        if (rand() % 3 == 0)    { spawnEnemy(1); spawnedMedium++; }
+        else                    { spawnEnemy(0); spawnedSmall++; }
     } else {
-        spawnEnemy(2); spawnedSmall++;
+        if (rand() % 4 == 0)        { spawnEnemy(2); spawnedLarge++; }
+        else if (rand() % 4 == 1)   { spawnEnemy(1); spawnedMedium++; }
+        else                        { spawnEnemy(0); spawnedSmall++; }
+        
     }
 }
 

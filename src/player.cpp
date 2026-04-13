@@ -57,27 +57,27 @@ void damagePlayer() {
 void firePlayerWeapon(float cx, float y, WeaponType wpn, int lvl) {
     if (wpn == WeaponType::AUTO_CANNON) {
         if (lvl == 1) {
-            bullets.push_back(createBullet(texWeaponAuto, cx-16, y, 0,-15, 2, true));
+            bullets.push_back(createBullet(texWeaponAuto, cx-16, y, 0,-15, 4, true));
         } else if (lvl == 2) {
-            bullets.push_back(createBullet(texWeaponAuto, cx-32, y, 0,-15, 2, true));
-            bullets.push_back(createBullet(texWeaponAuto, cx,    y, 0,-15, 2, true));
+            bullets.push_back(createBullet(texWeaponAuto, cx-32, y, 0,-15, 4, true));
+            bullets.push_back(createBullet(texWeaponAuto, cx,    y, 0,-15, 4, true));
         } else {
-            bullets.push_back(createBullet(texWeaponAuto, cx-16, y-12, 0,-15, 2, true));
-            bullets.push_back(createBullet(texWeaponAuto, cx-48, y+12, 0,-15, 2, true));
-            bullets.push_back(createBullet(texWeaponAuto, cx+16, y+12, 0,-15, 2, true));
+            bullets.push_back(createBullet(texWeaponAuto, cx-16, y-12, 0,-15, 4, true));
+            bullets.push_back(createBullet(texWeaponAuto, cx-48, y+12, 0,-15, 4, true));
+            bullets.push_back(createBullet(texWeaponAuto, cx+16, y+12, 0,-15, 4, true));
         }
     }
     else if (wpn == WeaponType::ROCKET) {
-        bullets.push_back(createBullet(texWeaponRocket, cx-16, y,     0,    -10, 1, true));
-        bullets.push_back(createBullet(texWeaponRocket, cx-32, y+10, -2.5f,  -9, 1, true));
-        bullets.push_back(createBullet(texWeaponRocket, cx,    y+10,  2.5f,  -9, 1, true));
+        bullets.push_back(createBullet(texWeaponRocket, cx-16, y,     0,    -10, 2, true));
+        bullets.push_back(createBullet(texWeaponRocket, cx-32, y+10, -2.5f,  -9, 2, true));
+        bullets.push_back(createBullet(texWeaponRocket, cx,    y+10,  2.5f,  -9, 2, true));
         if (lvl >= 2) {
-            bullets.push_back(createBullet(texWeaponRocket, cx-44, y+15, -3.5f, -8.5f, 1, true));
-            bullets.push_back(createBullet(texWeaponRocket, cx+12, y+15,  3.5f, -8.5f, 1, true));
+            bullets.push_back(createBullet(texWeaponRocket, cx-44, y+15, -3.5f, -8.5f, 2, true));
+            bullets.push_back(createBullet(texWeaponRocket, cx+12, y+15,  3.5f, -8.5f, 2, true));
         }
         if (lvl >= 3) {
-            bullets.push_back(createBullet(texWeaponRocket, cx-48, y+20, -4.5f, -8, 1, true));
-            bullets.push_back(createBullet(texWeaponRocket, cx+16, y+20,  4.5f, -8, 1, true));
+            bullets.push_back(createBullet(texWeaponRocket, cx-48, y+20, -4.5f, -8, 2, true));
+            bullets.push_back(createBullet(texWeaponRocket, cx+16, y+20,  4.5f, -8, 2, true));
         }
     }
 }

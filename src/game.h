@@ -133,7 +133,7 @@ extern Player                    player;
 extern GameState    currentState;
 extern int          currentStage, currentWave;
 extern int          enemyKillCount, waveEnemyTarget;
-extern int          spawnTimer, spawnedSmall, spawnedMedium;
+extern int          spawnTimer, spawnedSmall, spawnedMedium, spawnedLarge;
 extern Uint32       transitionStart;
 extern int          highScore;
 extern const Uint8* keyboardState;
